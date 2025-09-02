@@ -84,8 +84,8 @@ export const Login = () => {
             
         }
          catch(error){
+            toast.dismiss(toastStatus);
             if(error.response.status === 404){
-                toast.dismiss(toastStatus);
                 toast.error('Please sign in first', {
                            position: "top-center",
                            autoClose: 2000,
