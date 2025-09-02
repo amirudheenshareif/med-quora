@@ -7,17 +7,18 @@ import loginRoute from "./routes/LoginRoute.js";
 import { doctorsRoute } from "./routes/DoctorsRoute.js";
 import { answerRoutes } from "./routes/AnswerRoutes.js";
 import { testRoute } from "./routes/test.js";
+import { authMiddleWare } from "./middleware/auth.middleware.js";
 // import { getTagAndType } from "./utils/LLM.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/questions",questionsRoutes)
-app.use("/answer",answerRoutes)
+app.use("/questions",authMiddleWare,questionsRoutes)
+app.use("/answer",authMiddleWare,answerRoutes)
 app.use("/signup",signUpRoute)
 app.use("/login",loginRoute)
-app.use("/doctors",doctorsRoute)
+app.use("/doctors",authMiddleWare,doctorsRoute)
 app.use("/test",testRoute)
 // app.post("/llm",getTagAndType)
 

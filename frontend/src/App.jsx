@@ -19,6 +19,8 @@ import { QueryReply } from './pages/DoctorPortal/QueryReply'
 import { QueryClient,QueryClientProvider } from '@tanstack/react-query'
 import { createContext, useState } from 'react'
 
+
+
 export const AuthContext = createContext();
 function App() {
 

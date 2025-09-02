@@ -5,6 +5,7 @@ import { Button } from './ui/button'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../App.jsx'
+import { toast,Zoom } from 'react-toastify'
 
 
 export const Login = () => {
@@ -55,7 +56,17 @@ export const Login = () => {
              localStorage.setItem("lastName",lastName)
              setIsSignedIn(true);
 
-             
+             toast.success('Login successful!', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
              navigate("/feed");
             
         }

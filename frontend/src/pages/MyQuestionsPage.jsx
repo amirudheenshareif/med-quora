@@ -14,13 +14,18 @@ export const MyQuestionsPage = () => {
   const[pendingQuestions,setPendingQuestions] = useState([]);
   const[answeredQuestions,setAnsweredQuestions] = useState([]);
   const[activeStatus,setActiveStatus] = useState("All");
+  const token = localStorage.getItem("token")
 
 
   const fetchMyQuestions = async()=> {
     try {
-      const response = await axios.get(`http://localhost:3000/questions/patient/${userId}`);
+      const response = await axios.get(`http://localhost:3000/questions/patient/${userId}`,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
       if(response){
-        console.log(response.data);
+        // console.log(response.data);
         setAllQuestions(response?.data?.questions)
         setMyQuestions(response?.data?.questions)
       }
@@ -35,8 +40,8 @@ export const MyQuestionsPage = () => {
     setPendingQuestions(pending);
     const answered = allQuestions?.filter(question => question.status === "Answered");
     setAnsweredQuestions(answered);
-    console.log("Pending questions:", pending);
-    console.log("Answered questions:", answered);
+    // console.log("Pending questions:", pending);
+    // console.log("Answered questions:", answered);
   }
 
   useEffect(()=> {

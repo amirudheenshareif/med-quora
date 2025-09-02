@@ -12,12 +12,17 @@ export const DoctorProfilePage = () => {
   const[isLoading,setIsLoading] = useState(false)
   const[docData,setDocData] = useState([]);
   const[answers,setAnswers] = useState([])
+  const token = localStorage.getItem("token")
 
 
   const fetchDoctorDetails = async () =>{
     setIsLoading(true)
-    const response = await axios.get(`http://localhost:3000/doctors/${doctorId}`)
-    console.log(response?.data);
+    const response = await axios.get(`http://localhost:3000/doctors/${doctorId}`,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      })
+    // console.log(response?.data);
     setDocData(response.data?.response)
     setIsLoading(false)
   }

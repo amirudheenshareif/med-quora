@@ -1,11 +1,11 @@
 import React from 'react'
 import { Badge } from './ui/badge';
-import { LocateFixedIcon, MapPin, MessageCircle } from 'lucide-react';
+import { MapPin, MessageCircle } from 'lucide-react';
 import { Button } from './ui/button';
-import { useNavigate } from 'react-router-dom';
+
 
 export const DoctorProfile = () => {
-    const navigate = useNavigate();
+   
   return (
     <div className='mt-10 bg-slate-100 rounded-md p-6'>
         <div className='flex flex-col  sm:flex-row gap-2'>

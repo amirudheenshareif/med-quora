@@ -6,6 +6,7 @@ import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from './ui/se
 import { categories } from '../data/helper.js'
 import { Button } from './ui/button.jsx'
 import { useNavigate } from 'react-router-dom'
+import { toast,Zoom } from 'react-toastify'
 
 export const DoctorSignUp = () => {
 
@@ -30,7 +31,7 @@ export const DoctorSignUp = () => {
     })
   }
 
-  console.log(formData);
+  // console.log(formData);
   
 
 
@@ -56,6 +57,17 @@ export const DoctorSignUp = () => {
       localStorage.setItem("role",role)
       localStorage.setItem("firstName",firstName)
       localStorage.setItem("lastName",lastName)
+      toast.success('Sign up successful!', {
+                                 position: "top-center",
+                                 autoClose: 2000,
+                                 hideProgressBar: false,
+                                 closeOnClick: false,
+                                 pauseOnHover: true,
+                                 draggable: true,
+                                 progress: undefined,
+                                 theme: "light",
+                                 transition: Zoom,
+                                 });
       navigate("/inbox");
     }
     catch(e){

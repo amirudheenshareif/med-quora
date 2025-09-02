@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App'
 import { useContext } from 'react'
+import { toast,Zoom } from 'react-toastify'
 
 
 export const SignUp = () => {
@@ -58,6 +59,17 @@ export const SignUp = () => {
     localStorage.setItem("firstName",firstName)
     localStorage.setItem("lastName",lastName)
     setIsSignedIn(true);
+    toast.success('Sign up successful!', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
             
     navigate("/feed");
     }

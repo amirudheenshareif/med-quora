@@ -11,11 +11,16 @@ export const QuestionPage = () => {
 
   const navigate = useNavigate();
   const {queryId} = useParams();
+  const token = localStorage.getItem("token")
   
 
   const fetchQnAData = async () => {
-    const response = await axios.get("http://localhost:3000/questions/qna");
-    console.log(response.data.queriesInfo)
+    const response = await axios.get("http://localhost:3000/questions/qna",{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+    // console.log(response.data.queriesInfo)
     return response.data.queriesInfo;
   }
 
@@ -25,7 +30,7 @@ export const QuestionPage = () => {
   })
 
   const thisPageQuery = data?.find((obj) => obj._id == queryId);
-  console.log(thisPageQuery);
+  // console.log(thisPageQuery);
   
   const answers = thisPageQuery?.answers;
 
@@ -42,8 +47,8 @@ export const QuestionPage = () => {
         <div className='flex flex-col gap-1'>
           <h1 className='text-2xl font-bold text-gray-900 mb-2'>{thisPageQuery?.title}</h1>
           <div className='flex flex-col justify-center sm:items-center gap-2 sm:flex-row sm:gap-2'>
-            <p class="text-sm text-gray-500">
-              Asked by <span class="font-medium text-gray-700">{thisPageQuery?.askedBy?.firstName}</span>
+            <p className="text-sm text-gray-500">
+              Asked by <span className="font-medium text-gray-700">{thisPageQuery?.askedBy?.firstName}</span>
               </p>
             <Badge className='bg-blue-100 text-blue-600 text-xs font-medium px-3 py-1 rounded-full'>{thisPageQuery?.tag}</Badge>
             <div className='flex gap-1'>
@@ -76,13 +81,13 @@ export const QuestionPage = () => {
       <div onClick={()=> navigate(`/doctors/${answer.doctor._id}`)} className='cursor-pointer flex gap-4'>
         <Button variant='outline' className='rounded-full'>{answer?.doctor?.firstName.slice(0,1)}</Button>
         <div className='flex flex-col gap-1'>
-          <div onClick={() => navigate(`/doctor/${answer.doctor._id}`)} className='flex flex-col gap-2 sm:flex-row sm:gap-2'>
+          <div className='flex flex-col gap-2 sm:flex-row sm:gap-2'>
              <h3 className='text-base font-semibold text-gray-900'>{`Dr ${answer.doctor.firstName} ${answer.doctor.lastName}`}</h3>
             <Badge className='bg-green-100 text-green-600 rounded-full text-xs'>Verified</Badge>
           </div>
           <div className='flex flex-col sm:flex-row items-left gap-2'>
             <Badge className='font-light mt-2 sm:mt-0' variant="primary">{thisPageQuery?.tag}</Badge>
-            <p className='text-sm text-gray-500 font-normal'>{`${answer.doctor.experience} years experience`}</p>
+            <p className='text-sm text-gray-500 font-normal'>{`${answer?.doctor?.experience} years experience`}</p>
             <div className='flex gap-1 items-center'>
                 <Clock className='w-4 h-4'/>
                 <p className='text-xs text-gray-400'>2 hours ago</p>

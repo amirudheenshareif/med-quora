@@ -11,27 +11,46 @@ import { useNavigate } from "react-router-dom";
 export const  Inbox = () => {
 
   const doctorId = localStorage.getItem("userId");
-  const[inboxQueries,setInboxQueries]=useState([])
+  const[sortedQueries,setSortedQueries]=useState([])
   const[isLoading,setIsLoading] = useState(false)
   const navigate = useNavigate();
+  const token = localStorage.getItem("token")
+  const priority = { Emergency: 1, Moderate: 2, Lifestyle: 3 };
 
   const fetchInBoxQueries = async() => {
     try {
       setIsLoading(true)
-      const response = await axios.get(`http://localhost:3000/doctors/inbox/${doctorId}`);
-      console.log(response);
-      setIsLoading(false)
-      const queryArray = response.data.inboxQueries;
-      setInboxQueries(queryArray)
+      const response = await axios.get(`http://localhost:3000/doctors/inbox/${doctorId}`,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+      if(response){
+        // console.log(response);
+        setIsLoading(false)
+        const queryArray = response.data.inboxQueries;
+      
+        let sortedData = [...queryArray].sort((a, b) => {
+               return priority[a.type] - priority[b.type];
+                });
+       setSortedQueries(sortedData);
+      //  console.log("sorted data",sortedData);
+      }
+
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-  console.log(doctorId);
   fetchInBoxQueries(); 
   }, [])
+
+
+
+
+
+
 
   
   
@@ -75,7 +94,7 @@ export const  Inbox = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-      {inboxQueries?.map((inboxQuery) => (
+      {sortedQueries?.map((inboxQuery) => (
        <InboxMessage onClick={()=> navigate(`/query-reply/${inboxQuery._id}`)} key = {inboxQuery._id} inboxQuery={inboxQuery}/>
       ))}
         </div>

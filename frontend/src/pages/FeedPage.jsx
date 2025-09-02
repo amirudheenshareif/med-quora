@@ -8,9 +8,11 @@ import { categories } from '../data/helper'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { BarLoader } from 'react-spinners'
+import { toast,Zoom } from 'react-toastify'
 
 export const FeedPage = () => {
   const[askQuestionModal,setAskQuestionModal] = useState(false);
+  const[posting,setPosting] = useState(false);
   const[title,setTitle] = useState("");
   const[description,setDescription]= useState("");
   const[medHistory,setMedHistory] = useState("")
@@ -19,6 +21,7 @@ export const FeedPage = () => {
   const[allQuestions,setAllQuestions] = useState([]);
   const[doctorId,setDoctorId] = useState([]);
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token")
   
   
   const queryData = {
@@ -29,17 +32,17 @@ export const FeedPage = () => {
     medHistory
   }
 
-   useEffect(()=> {
-    console.log(localStorage);
-  },[])
-
 
 
 
   const fetchQnAData = async() => {
   try {
-      const response = await axios.get("http://localhost:3000/questions/qna");
-      console.log("data of qna",response.data.queriesInfo);
+      const response = await axios.get("http://localhost:3000/questions/qna",{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+      // console.log("data of qna",response.data.queriesInfo);
       return response.data.queriesInfo;
   } catch (error) {
     console.log("Error fetching QnA data");
@@ -56,17 +59,42 @@ export const FeedPage = () => {
   
 
   const postQuestion =  async () => {
-    const response = await axios.post("http://localhost:3000/questions/post",queryData);
-    setAskQuestionModal(false);
-    console.log(response);  
+    setPosting(true)
+    try {
+      const response = await axios.post("http://localhost:3000/questions/post",queryData,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+      setAskQuestionModal(false);
+      setPosting(false);
+      toast.success('Question Posted!', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
+    } catch (error) {
+      console.log(error);
+      
+    }  
   }
 
  
  const fetchDoctorSuggestion = async ()=> {
           try{
-            const res = await axios.get("http://localhost:3000/doctors/suggestions");
+            const res = await axios.get("http://localhost:3000/doctors/suggestions",{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+        });
             setDoctorSuggestions(res.data.doctors);
-            console.log(res);  
+            // console.log(res);  
           }
           catch(err){
             console.log(err,"Error fetching dr suggestions")
@@ -109,8 +137,8 @@ export const FeedPage = () => {
           <Textarea onChange={(e) => setMedHistory(e.target.value)} className='mb-3 border border-gray-300 rounded-xl px-4 py-2 text-slate-800 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 outline-none resize-none' 
           type = "text"  placeholder="Mention your medical history..."/>
           <div className='flex gap-2 mb-3'>
-            <Button onClick={postQuestion} variant ="outline" className='mb-3 rounded-xl bg-blue-600 text-white font-semibold shadow-sm hover:bg-blue-700 transition"'>Post Question</Button>
-            <Button onClick={()=> {setAskQuestionModal(false)}} className='rounded-xl bg-gray-100 text-gray-700 border border-gray-300 font-medium hover:bg-gray-200 transition'>Cancel</Button>
+            <Button onClick={postQuestion} variant ="outline" className='mb-3 rounded-xl bg-blue-600 text-white font-semibold shadow-sm hover:bg-blue-700 transition"'>{`${posting ? "Posting..." : "Post Question"}`}</Button>
+            <Button disabled={posting} onClick={()=> {setAskQuestionModal(false)}} className='rounded-xl bg-gray-100 text-gray-700 border border-gray-300 font-medium hover:bg-gray-200 transition'>Cancel</Button>
           </div>
           {doctorSuggestions?.map((docObj)=> (
             <DoctorSuggestion  key={docObj._id} docObj={docObj} doctorId={doctorId} setDoctorId={setDoctorId}/>
@@ -124,7 +152,7 @@ export const FeedPage = () => {
       
       :(<div>
         <section className='mt-8 flex gap-2 p-3 sm:p-6'>
-        <Input type = "text" placeholder="Ask your question"/>
+        <Input disabled={true} type = "text" placeholder="Ask your question"/>
         <Button className='bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition' 
         onClick={()=> {setAskQuestionModal(true)}}>+</Button>
       </section>

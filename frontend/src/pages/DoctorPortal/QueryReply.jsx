@@ -5,27 +5,36 @@ import { Button } from '../../components/ui/button.jsx'
 import { useParams } from 'react-router-dom'
 import { useEffect,useState } from 'react'
 import axios from 'axios'
+import { toast,Zoom } from 'react-toastify'
+import { BarLoader } from 'react-spinners'
 
 
 export const QueryReply = () => {
 
 const {queryId} =useParams();
 const[queryInfo,setQueryInfo] = useState({});
+const[isLoading,setIsLoading] = useState(false);
 const[patientDetails,setPatientDetails] = useState({});
 const[aiSuggestion,setAiSuggestion] = useState("");
 const[generatingSuggestion,setGeneratingSuggestion]=useState(false)
 const userId = localStorage.getItem("userId");
+const token = localStorage.getItem("token")
 
 const fetchQueryInfo = async () => {
     try {
-        const response = await axios.get(`http://localhost:3000/doctors/query-reply/${queryId}`);
-        console.log(response.data);
+        setIsLoading(true);
+        const response = await axios.get(`http://localhost:3000/doctors/query-reply/${queryId}`,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
+        
         
         if(response){
-            console.log(response.data);
             setQueryInfo(response.data.queryInfo);
             setPatientDetails(response.data.queryInfo.askedBy)
-            console.log(response.data.queryInfo);   
+            setIsLoading(false);
+             
         }    
     } catch (error) {
         console.log("Err fetching QueryInfo",error); 
@@ -50,12 +59,28 @@ useEffect(() => {
 }, []);
 
 const sendResponse = async () => {
+    setAiSuggestion("");
     try {
         const response = await axios.post("http://localhost:3000/answer/post",{
             queryId,
             doctorId:userId,
             answerText:aiSuggestion
-        })
+        },{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      })
+        toast.success('Response sent', {
+                                   position: "top-center",
+                                   autoClose: 2000,
+                                   hideProgressBar: false,
+                                   closeOnClick: false,
+                                   pauseOnHover: true,
+                                   draggable: true,
+                                   progress: undefined,
+                                   theme: "light",
+                                   transition: Zoom,
+                                   });
         if(response){
             console.log(response.data);  
         }
@@ -72,7 +97,9 @@ const sendResponse = async () => {
 
 
   return (
-    <div className='mt-8 flex flex-col gap-5 p-3 sm:p-6'>
+    <>
+    {isLoading ? <div className="w-full px-3 sm:px-6 my-4"><BarLoader width='100%' color='#2563EB'/></div>:
+        <div className='mt-8 flex flex-col gap-5 p-3 sm:p-6'>
         {/* Patient info */}
         <div className='flex flex-col gap-6 rounded-md bg-white shadow-md p-4'>
             <div className='flex gap-2 items-center'>
@@ -178,5 +205,7 @@ const sendResponse = async () => {
 
 
     </div>
+}
+    </>
   )
 }

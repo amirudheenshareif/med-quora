@@ -10,11 +10,16 @@ export const MyAnswers = () => {
   const doctorId = localStorage.getItem("userId");
   const[answerHistory,setAnswerHistory] = useState([]);
   const[isLoading,setIsLoading] = useState(false);
+  const token = localStorage.getItem("token")
 
   const fetchMyAnswers = async () => {
     try {
       setIsLoading(true)
-      const response = await axios.get(`http://localhost:3000/doctors/answer-history/${doctorId}`);
+      const response = await axios.get(`http://localhost:3000/doctors/answer-history/${doctorId}`,{
+        headers:{
+          Authorization:`Bearer ${token}` 
+        }
+      });
       if(response){
         setAnswerHistory(response.data.answers);
         setIsLoading(false);

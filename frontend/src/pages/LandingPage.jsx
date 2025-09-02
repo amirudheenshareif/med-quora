@@ -10,9 +10,7 @@ export const LandingPage = () => {
 const navigate = useNavigate();
 const[modalStatus,setModalStatus] = useState(false);
 
-useEffect(()=> {
-  console.log(localStorage);
-},[])
+
 
 
 
@@ -45,10 +43,10 @@ useEffect(()=> {
       </div>
      </section>
 
-     <section className='flex flex-col gap-2'>
+     {/* <section className='flex flex-col gap-2'>
       <h2 className='mb-5 text-center text-2xl sm:text-3xl md:text-4xl font-bold '>Recent Questions</h2>
-      {/* <QnA/> */}
-     </section>
+      <QnA/>
+     </section> */}
     </div>
    )}
   </>

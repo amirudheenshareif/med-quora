@@ -5,6 +5,7 @@ import { Button } from './ui/button'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../App.jsx'
+import { toast,Zoom } from 'react-toastify'
 
 export const DoctorLogin = () => {
 
@@ -21,11 +22,9 @@ export const DoctorLogin = () => {
             return{
                 ...prev,
                 [e.target.name]:e.target.value,
-
             }
         })
-
-        console.log(formData);
+        // console.log(formData);
     }
 
     const handleSubmit = async(e) => {
@@ -38,7 +37,7 @@ export const DoctorLogin = () => {
 
         try {
              const response = await axios.post("http://localhost:3000/login/doctor",formData);
-             console.log(response.data);
+             
              localStorage.clear();
              token = response.data.token;
              userId = response.data.userId;
@@ -50,9 +49,20 @@ export const DoctorLogin = () => {
              localStorage.setItem("role",role)
              localStorage.setItem("firstName",firstName)
              localStorage.setItem("lastName",lastName)
-             console.log(localStorage)
+            //  console.log(localStorage)
              setInvalidPassword(false)
              setIsSignedIn(true);
+             toast.success('Login successful!', {
+                                        position: "top-center",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: false,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                        transition: Zoom,
+                                        });
              navigate(`/inbox/${userId}`)
         }
         catch(e){

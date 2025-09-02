@@ -3,7 +3,7 @@ import { FileQuestionMark, LogOut, MessageCircle, Stethoscope, User2Icon,Users }
 import { useNavigate } from 'react-router-dom'
 import {Button} from '../components/ui/button'
 import { AuthContext } from '../App.jsx'
-
+import { toast,Zoom } from 'react-toastify'
 
 
 
@@ -12,8 +12,6 @@ export const Header = () => {
 
   const navigate = useNavigate();
   const {isSignedIn,setIsSignedIn} = useContext(AuthContext);
-  // const[signUpModalStatus,setSignUpModalStatus] = useState(false);
-  // const[loginModalStatus,setLoginModalStatus] = useState(false)
   const[navModalStatus,setNavModalStatus] = useState(false);
   const role = localStorage.getItem("role")
   const userId = localStorage.getItem("userId")
@@ -24,7 +22,6 @@ export const Header = () => {
   const handleSignUp = () => {
     navigate("/signup");  
   }
-
 
   useEffect(()=>{
   const token = localStorage.getItem("token");
@@ -120,7 +117,21 @@ export const Header = () => {
             setNavModalStatus(false);
             setIsSignedIn(false);
             localStorage.clear();
-            navigate("/");
+            
+             toast.error('You are logged out!', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
+              navigate("/");
+            
+            
             }}  className='p-3 flex gap-4 mt-8 rounded-lg bg-red-50 hover:border-1 border-red-600 transition cursor-pointer'>
           <LogOut className='text-red-600 '/>
           <div className='flex flex-col'>
@@ -128,9 +139,7 @@ export const Header = () => {
             
           </div>
         </div>
-        </div>
-
-       
+        </div> 
       </div>
     ))}
     
