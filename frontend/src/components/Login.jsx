@@ -72,6 +72,17 @@ export const Login = () => {
         }
          catch(error){
             if(error.response.status === 404){
+                toast.error('Please sign in first', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
                 navigate("/signup");
                 return;
             }

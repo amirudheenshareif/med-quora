@@ -71,7 +71,17 @@ export const DoctorLogin = () => {
                 return;
             }
             if(e.response.data.loginStatus===false){
-                alert("User not found");
+                toast.error('Please sign in first', {
+                           position: "top-center",
+                           autoClose: 2000,
+                           hideProgressBar: false,
+                           closeOnClick: false,
+                           pauseOnHover: true,
+                           draggable: true,
+                           progress: undefined,
+                           theme: "light",
+                           transition: Zoom,
+                           });
                 navigate("/dr-signup")
             }
             console.log(e);
