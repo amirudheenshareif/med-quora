@@ -15,7 +15,7 @@ export const QuestionPage = () => {
   
 
   const fetchQnAData = async () => {
-    const response = await axios.get("http://localhost:3000/questions/qna",{
+    const response = await axios.get("https://med-quora.onrender.com/questions/qna",{
         headers:{
           Authorization:`Bearer ${token}` 
         }

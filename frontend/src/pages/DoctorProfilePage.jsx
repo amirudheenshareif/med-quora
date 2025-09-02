@@ -17,7 +17,7 @@ export const DoctorProfilePage = () => {
 
   const fetchDoctorDetails = async () =>{
     setIsLoading(true)
-    const response = await axios.get(`http://localhost:3000/doctors/${doctorId}`,{
+    const response = await axios.get(`https://med-quora.onrender.com/doctors/${doctorId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
         }

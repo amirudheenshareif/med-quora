@@ -15,7 +15,7 @@ export const MyAnswers = () => {
   const fetchMyAnswers = async () => {
     try {
       setIsLoading(true)
-      const response = await axios.get(`http://localhost:3000/doctors/answer-history/${doctorId}`,{
+      const response = await axios.get(`https://med-quora.onrender.com/doctors/answer-history/${doctorId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
         }

@@ -36,7 +36,7 @@ export const DoctorLogin = () => {
         let lastName;
 
         try {
-             const response = await axios.post("http://localhost:3000/login/doctor",formData);
+             const response = await axios.post("https://med-quora.onrender.com/login/doctor",formData);
              
              localStorage.clear();
              token = response.data.token;

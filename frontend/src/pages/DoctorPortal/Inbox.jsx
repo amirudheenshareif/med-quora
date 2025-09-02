@@ -20,7 +20,7 @@ export const  Inbox = () => {
   const fetchInBoxQueries = async() => {
     try {
       setIsLoading(true)
-      const response = await axios.get(`http://localhost:3000/doctors/inbox/${doctorId}`,{
+      const response = await axios.get(`https://med-quora.onrender.com/doctors/inbox/${doctorId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
         }
@@ -45,20 +45,6 @@ export const  Inbox = () => {
   useEffect(() => {
   fetchInBoxQueries(); 
   }, [])
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
 
   return (
     <>

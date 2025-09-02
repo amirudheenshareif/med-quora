@@ -61,7 +61,7 @@ export const FeedPage = () => {
   const postQuestion =  async () => {
     setPosting(true)
     try {
-      const response = await axios.post("http://localhost:3000/questions/post",queryData,{
+      const response = await axios.post("https://med-quora.onrender.com/questions/post",queryData,{
         headers:{
           Authorization:`Bearer ${token}` 
         }
@@ -88,7 +88,7 @@ export const FeedPage = () => {
  
  const fetchDoctorSuggestion = async ()=> {
           try{
-            const res = await axios.get("http://localhost:3000/doctors/suggestions",{
+            const res = await axios.get("https://med-quora.onrender.com/doctors/suggestions",{
         headers:{
           Authorization:`Bearer ${token}` 
         }

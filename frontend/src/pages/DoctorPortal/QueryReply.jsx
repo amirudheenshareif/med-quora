@@ -23,7 +23,7 @@ const token = localStorage.getItem("token")
 const fetchQueryInfo = async () => {
     try {
         setIsLoading(true);
-        const response = await axios.get(`http://localhost:3000/doctors/query-reply/${queryId}`,{
+        const response = await axios.get(`https://med-quora.onrender.com/doctors/query-reply/${queryId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
         }
@@ -44,7 +44,7 @@ const fetchQueryInfo = async () => {
 const fetchAiSuggestion = async () => {
      try {
         setGeneratingSuggestion(true)
-        const response = await axios.post("http://localhost:3000/answer/generate",{question:queryInfo?.description});
+        const response = await axios.post("https://med-quora.onrender.com/answer/generate",{question:queryInfo?.description});
         if(response){
             setAiSuggestion(response?.data?.generatedAnswer);
             setGeneratingSuggestion(false)
@@ -61,7 +61,7 @@ useEffect(() => {
 const sendResponse = async () => {
     setAiSuggestion("");
     try {
-        const response = await axios.post("http://localhost:3000/answer/post",{
+        const response = await axios.post("https://med-quora.onrender.com/answer/post",{
             queryId,
             doctorId:userId,
             answerText:aiSuggestion
