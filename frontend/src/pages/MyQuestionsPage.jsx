@@ -4,10 +4,12 @@ import { Clock,MessageCircle,ThumbsUpIcon } from 'lucide-react'
 import {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { BarLoader } from 'react-spinners'
 
 export const MyQuestionsPage = () => {
 
   const navigate = useNavigate();
+  const[isLoading,setIsLoading] = useState(false)
   const userId = localStorage.getItem("userId")
    const[allQuestions,setAllQuestions] = useState([]);
   const[myQuestions,setMyQuestions] = useState([]);
@@ -19,6 +21,7 @@ export const MyQuestionsPage = () => {
 
   const fetchMyQuestions = async()=> {
     try {
+      setIsLoading(true);
       const response = await axios.get(`https://med-quora.onrender.com/questions/patient/${userId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
@@ -28,6 +31,7 @@ export const MyQuestionsPage = () => {
         // console.log(response.data);
         setAllQuestions(response?.data?.questions)
         setMyQuestions(response?.data?.questions)
+        setIsLoading(false);
       }
       
     } catch (error) {
@@ -55,6 +59,11 @@ export const MyQuestionsPage = () => {
 
 
   return (
+       <>
+       {isLoading ?  
+              <div className="w-full px-3 sm:px-6 my-4">
+                <BarLoader width='100%' color='#2563EB'/>
+              </div> :
     <div className='mt-10 flex flex-col gap-6 p-3 sm:p-6'>
       <div className='flex flex-col gap-2'>
         <h1 className='text-3xl font-bold'>My Questions</h1>
@@ -121,6 +130,7 @@ export const MyQuestionsPage = () => {
        </div>
        ))}
 
-    </div>
+    </div>}
+       </>
   )
 }
