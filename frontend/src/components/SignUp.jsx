@@ -45,7 +45,7 @@ export const SignUp = () => {
     let role;
     
     try{
-      toast.loading('Please wait...', {
+      const toastStatus = toast.loading('Please wait...', {
                            position: "top-center",
                            autoClose: 2000,
                            hideProgressBar: false,
@@ -57,7 +57,8 @@ export const SignUp = () => {
                            transition: Zoom,
                            });
     const response = await axios.post("https://med-quora.onrender.com/signup/patient/", formData);
-    console.log(response)
+    toast.dismiss(toastStatus);
+    // console.log(response)
     localStorage.clear();
     token = response.data.token;
     userId = response.data.userId;
