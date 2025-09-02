@@ -44,7 +44,11 @@ const fetchQueryInfo = async () => {
 const fetchAiSuggestion = async () => {
      try {
         setGeneratingSuggestion(true)
-        const response = await axios.post("https://med-quora.onrender.com/answer/generate",{question:queryInfo?.description});
+        const response = await axios.post("https://med-quora.onrender.com/answer/generate",{question:queryInfo?.description},{
+        headers:{
+              Authorization:`Bearer ${token}` 
+        }
+        });
         if(response){
             setAiSuggestion(response?.data?.generatedAnswer);
             setGeneratingSuggestion(false)
