@@ -40,8 +40,9 @@ export const Login = () => {
       let role;
       let firstName;
       let lastName;
+      let toastStatus;
         try{
-            const toastStatus=  toast.loading('Please wait...', {
+             toastStatus=  toast.loading('Please wait...', {
                            position: "top-center",
                            autoClose: 2000,
                            hideProgressBar: false,
@@ -84,6 +85,7 @@ export const Login = () => {
         }
          catch(error){
             if(error.response.status === 404){
+                toast.dismiss(toastStatus);
                 toast.error('Please sign in first', {
                            position: "top-center",
                            autoClose: 2000,

@@ -34,9 +34,10 @@ export const DoctorLogin = () => {
         let role;
         let firstName;
         let lastName;
+        let toastStatus;
 
         try {
-            const toastStatus= toast.loading('Please wait...', {
+             toastStatus= toast.loading('Please wait...', {
                            position: "top-center",
                            autoClose: 2000,
                            hideProgressBar: false,
@@ -77,6 +78,7 @@ export const DoctorLogin = () => {
              navigate(`/inbox/${userId}`)
         }
         catch(e){
+            toast.dismiss(toastStatus);
             if(e.response.status === 401){
                 setInvalidPassword(true);
                 return;
