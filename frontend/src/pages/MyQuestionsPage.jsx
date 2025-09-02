@@ -19,7 +19,7 @@ export const MyQuestionsPage = () => {
 
   const fetchMyQuestions = async()=> {
     try {
-      const response = await axios.get(`http://localhost:3000/questions/patient/${userId}`,{
+      const response = await axios.get(`https://med-quora.onrender.com/questions/patient/${userId}`,{
         headers:{
           Authorization:`Bearer ${token}` 
         }

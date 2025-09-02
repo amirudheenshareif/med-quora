@@ -22,6 +22,7 @@ export const FeedPage = () => {
   const[doctorId,setDoctorId] = useState([]);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token")
+  console.log(token);
   
   
   const queryData = {
