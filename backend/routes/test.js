@@ -1,150 +1,36 @@
 import { Router } from "express";
-import { Query } from "../models/querySchema.js";
-
-// import { getTagAndType } from "../utils/LLM.js";
-// import { Patient } from "../models/patientSchema.js";
-// import { Doctor } from "../models/doctorSchema.js";
-// import { fetchMyQuestions } from "../controllers/fetchMyQuestions.js";
-// import { Doctor } from "../models/doctorSchema.js";
-
 export const testRoute = Router();
+// import { Patient } from "../models/patientSchema.js";
+// import { Query } from "../models/querySchema.js";
+import { fetchMyAnswers } from "../controllers/fetchMyAnswers.js";
 
-testRoute.post("/",async(req,res) => {
-  const{title,description,medHistory} = req.body;
-
-  // try {
-  //   const resp = await getTagAndType(description,medHistory);
-  //   if(resp){
-  //     return res.send({
-  //       msg:"success",
-  //       resp
-  //     })
+testRoute.get("/:doctorId", fetchMyAnswers
+  // async(req,res) => {
+  //   const{doctorId} = req.params;
+  //   try {
+      
+  //     // await Patient.deleteMany({});
+  //     // await Query.deleteMany({});
+  //     // res.status(200).json({message:"All collections cleared"})
+      
+  //   } catch (error) {
+  //     res.status(500).json({message:"Error clearing collections",error:error.message})
+      
   //   }
-    
-  // } catch (error) {
-  //   return res.send({
-  //     error
-  //   })
-
-    
   // }
- 
-})
-  
-//   async(req,res)=> {
-//   const{docId , ansId} = req.body;
+)
+
+
+// async(req,res) => {
+//   const {description,medHistory} = req.body;
 
 //   try {
-
-//     const doctor = await Doctor.findByIdAndUpdate(docId,{
-//       $push:{
-//         answers:ansId
-//       }
-//     },{new:true})
-
-//     if(doctor){
-//       return res.send({
-//         message:"answer inserted",
-//         doctor
-//       })
-//     }
-    
-//   } catch (error) {
-//     return res.send({
-//       message:"error insertinf ans id"
-//     })
-    
+//     const response = await analyseQuery(description,medHistory);
+//     res.status(200).json({message:"All collections cleared",response})
+//   }
+//   catch(e){
+//     res.status(500).json({message:"Error clearing collections",error:e.message})
 //   }
 // }
- 
-
-
-
-// const {age,sex,phoneNum} = req.body;
-  // const resp = await getTagAndType(desc);
-  
-
-  // if(resp){
-  //   return res.send({
-  //     msg:"ok",
-  //     resp
-  //   })
-  // }
-  //  res.send({
-  //     msg:"notok",
-  //     resp
-  //   })
-
-  // try {
-
-  //   const updatedDoc = await Patient.updateOne({_id:"68a35cfa607bc85cba009bd0"},{$set:{
-  //     age:age,
-  //     sex:sex,
-  //     phoneNum:phoneNum
-  //   }})
-
-  //   if(updatedDoc){
-  //     res.send({
-  //       msg:"ok",
-  //       updatedDoc
-  //     })
-  //   }
-    
-  // } catch (error) {
-  //   res.send({
-  //     msg:"not ok"
-  //   })
-    
-  // }
-  
-
-
-
-
-  //     const {
-  //   firstName,
-  //   lastName,
-  //   email,
-  //   password,
-  //   speciality,
-  //   about,
-  //   licenseNo,
-  //   experience,
-  //   address,
-  //   education,
-  //   workStatus
-  // } = req.body;
-
-  // try {
-  //   const doctor = await Doctor.create({
-  //   firstName,
-  //   lastName,
-  //   email,
-  //   password,
-  //   speciality,
-  //   about,
-  //   licenseNo,
-  //   experience,
-  //   address,
-  //   education,
-  //   workStatus
-
-  // })
-
-  // if(doctor){
-  //   return res.send({
-  //       doctor,
-  //       msg:"success"
-  //   })
-  // }
-    
-  // } catch (error) {
-  //   return res.send({
-  //       msg:"error creatinf dr doc",
-  //       error
-  //   })
-    
-  // }
-  
 
 

@@ -3,7 +3,7 @@ import { Doctor } from "../models/doctorSchema.js";
 
 export const fetchDrSuggestions = async(req,res)=> {
     try{
-        const doctors = await Doctor.find({}).limit(3);
+        const doctors = await Doctor.find({});
         res.send({
             message:"Doctors data fetched successfully",
             doctors

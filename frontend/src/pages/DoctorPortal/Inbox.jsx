@@ -1,6 +1,5 @@
 
 import { inboxItems } from "../../data/helper.js";
-import { Badge } from "../../components/ui/badge.jsx";
 import { BarLoader } from "react-spinners";
 import { InboxMessage } from '../../components/DoctorPortal/InboxMessage.jsx';
 import { useEffect, useState } from "react";
@@ -58,12 +57,12 @@ export const  Inbox = () => {
 
       {/* no of queries card */}
       <div className="flex flex-col gap-2">
-        {inboxItems.map(({ id, count, label, icon: Icon, iconClasses }) => (
+        {inboxItems.map(({ id, label, icon: Icon, iconClasses }) => (
           <div key={id} className="bg-white p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="flex gap-2 items-center">
               <Icon className={iconClasses} />
               <div className="flex flex-col">
-                <p className="text-3xl font-extrabold text-gray-800">{count}</p>
+                <p className="text-3xl font-extrabold text-gray-800">0</p>
                 <p className="text-sm font-medium text-gray-500">{label}</p>
               </div>
             </div>

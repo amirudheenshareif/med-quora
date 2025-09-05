@@ -85,7 +85,7 @@ export const Login = () => {
         }
          catch(error){
             toast.dismiss(toastStatus);
-            if(error.response.status === 404){
+            if(error.response && error.response.status === 404){
                 toast.error('Please sign in first', {
                            position: "top-center",
                            autoClose: 2000,
@@ -100,7 +100,7 @@ export const Login = () => {
                 navigate("/signup");
                 return;
             }
-            if(error.response.status === 401){
+            if(error.response && error.response.status === 401){
                 setInvalidPassword(true);
                 return;
             }

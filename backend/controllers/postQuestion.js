@@ -7,12 +7,16 @@ export const postQuestion = async (req,res) => {
     
 
     // Get tag and type
-    const response = await analyseQuery(description,medHistory);
-    const tag = response?.tag;
-    const type = response?.type;
-    const medicalHistory= response?.medHistory;
+   
+    let tag;
+    let type;
+    let medicalHistory;
 
     try{
+    const response = await analyseQuery(description,medHistory);
+    tag = response?.tag;
+    type = response?.type;
+    medicalHistory= response?.medHistory;
 
       const query = await Query.create([{
         title,

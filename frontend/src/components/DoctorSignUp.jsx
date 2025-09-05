@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Label } from './ui/label.jsx'
 import axios from 'axios'
 import { Input } from './ui/input.jsx'
@@ -7,19 +7,27 @@ import { categories } from '../data/helper.js'
 import { Button } from './ui/button.jsx'
 import { useNavigate } from 'react-router-dom'
 import { toast,Zoom } from 'react-toastify'
+import { AuthContext } from '../App.jsx'
 
 export const DoctorSignUp = () => {
 
   const navigate = useNavigate();
+  const{setIsSignedIn} = useContext(AuthContext)
 
   const [formData,setFormData] = useState({
     firstName:"",
     lastName:"",
     speciality:"",
     licenseNo:"",
+    workStatus:"",
+    experience:"",
+    education:"",
+    address:"",
+    about:"",
     email:"",
     password:"",
     confirmPassword:"",
+
   })
 
   const handleFormChange = (e)=> {
@@ -44,9 +52,10 @@ export const DoctorSignUp = () => {
     let role;
     let firstName;
     let lastName;
+    let toastStatus;
 
     try{
-      const toastStatus = toast.loading('Please wait...', {
+       toastStatus = toast.loading('Please wait...', {
                            position: "top-center",
                            autoClose: 2000,
                            hideProgressBar: false,
@@ -64,6 +73,8 @@ export const DoctorSignUp = () => {
       token = response.data.token;
       userId = response.data.userId;
       role = response.data.role;
+      firstName = response.data.firstName;
+      lastName = response.data.lastName;
       localStorage.setItem("token",token)
       localStorage.setItem("userId",userId);
       localStorage.setItem("role",role)
@@ -79,10 +90,12 @@ export const DoctorSignUp = () => {
                                  progress: undefined,
                                  theme: "light",
                                  transition: Zoom,
-                                 });
-      navigate("/inbox");
+                                 });                 
+      navigate(`/inbox/${userId}`);
+      setIsSignedIn(true);
     }
     catch(e){
+      toast.dismiss(toastStatus);
       if(e.response.status === 409){
         alert("User already exists")
         navigate("/dr-login")
@@ -147,6 +160,44 @@ export const DoctorSignUp = () => {
              <div className='flex flex-col gap-2'>
               <Label>Medical License Number</Label>
               <Input onChange={handleFormChange} value={formData.licenseNo} name='licenseNo'  placeholder='Enter your medical license number' type="text"/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Label>Experience</Label>
+              <Input onChange={handleFormChange} value={formData.experience} name='experience'  placeholder='Years of experience' type="number"/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Label>Education</Label>
+              <Input onChange={handleFormChange} value={formData.education} name='education'  placeholder='Enter your educational details' type="text"/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Label>Address</Label>
+              <Input onChange={handleFormChange} value={formData.address} name='address'  placeholder='Enter your address' type="text"/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Label>About</Label>
+              <Input onChange={handleFormChange} value={formData.about} name='about'  placeholder='Something about yourself' type="text"/>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Label>Work Status</Label>
+             <Select
+               value={formData.workStatus}
+               onValueChange={(value) =>
+               setFormData((prev) => ({ ...prev, workStatus: value }))
+               }
+             >
+                 <SelectTrigger>
+                   <SelectValue placeholder="Current work status" />
+                 </SelectTrigger>
+                 <SelectContent>
+                    <SelectItem value="Active">Active</SelectItem>
+                    <SelectItem value="Retired">Retired</SelectItem>
+                 </SelectContent>
+               </Select>
             </div>
 
              <div className='flex flex-col gap-2'>

@@ -48,12 +48,12 @@ export const MyAnswers = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-                {statsData.map(({ id, value, label, icon: Icon, iconClasses }) => (
+                {statsData.map(({ id, label, icon: Icon, iconClasses }) => (
                   <div key={id} className="bg-white p-4 rounded-md shadow-sm">
                     <div className="flex gap-2 items-center">
                       <Icon className={iconClasses} />
                       <div className="flex flex-col">
-                        <p className="text-3xl font-extrabold">{value}</p>
+                        <p className="text-3xl font-extrabold">0</p>
                         <p className="text-sm text-slate-400">{label}</p>
                       </div>
                     </div>
@@ -64,7 +64,7 @@ export const MyAnswers = () => {
               <div className=' bg-slate-50'>
                  <div className='flex flex-col'>
                   <h1 className='text-2xl font-bold'>Answer history</h1>
-                  <p className='text-sm text-slate-400'>5 of 5 answers</p>
+                  <p className='text-sm text-slate-400'>{`${answerHistory?.length} of ${answerHistory?.length} answers`}</p>
                 </div>
               
               <div className='h-[500px] overflow-y-scroll'>

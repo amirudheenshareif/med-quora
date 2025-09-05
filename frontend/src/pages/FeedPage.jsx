@@ -22,7 +22,7 @@ export const FeedPage = () => {
   const[doctorId,setDoctorId] = useState([]);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token")
-  console.log(token);
+  // console.log(token);
   
   
   const queryData = {
@@ -44,7 +44,7 @@ export const FeedPage = () => {
         }
       });
       // console.log("data of qna",response.data.queriesInfo);
-      return response.data.queriesInfo;
+      return response?.data?.queriesInfo;
   } catch (error) {
     console.log("Error fetching QnA data");
     return [];
@@ -94,7 +94,9 @@ export const FeedPage = () => {
           Authorization:`Bearer ${token}` 
         }
         });
-            setDoctorSuggestions(res.data.doctors);
+           if(res){
+             setDoctorSuggestions(res.data.doctors);
+           }
             // console.log(res);  
           }
           catch(err){
@@ -104,7 +106,7 @@ export const FeedPage = () => {
 
  useEffect(()=> {
   fetchDoctorSuggestion();
-  console.log(doctorSuggestions);
+  // console.log(doctorSuggestions);
  },[])
 
 

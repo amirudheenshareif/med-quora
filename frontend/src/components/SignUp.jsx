@@ -43,9 +43,12 @@ export const SignUp = () => {
     let token;
     let userId;
     let role;
+    let firstName;
+    let lastName;
+    let toastStatus;
     
     try{
-      const toastStatus = toast.loading('Please wait...', {
+     toastStatus = toast.loading('Please wait...', {
                            position: "top-center",
                            autoClose: 2000,
                            hideProgressBar: false,
@@ -70,6 +73,8 @@ export const SignUp = () => {
     localStorage.setItem("role",role)
     localStorage.setItem("firstName",firstName)
     localStorage.setItem("lastName",lastName)
+    console.log(localStorage);
+    
     setIsSignedIn(true);
     toast.success('Sign up successful!', {
                            position: "top-center",
@@ -86,7 +91,8 @@ export const SignUp = () => {
     navigate("/feed");
     }
     catch(error){
-      if(error.response.status === 409){
+      toast.dismiss(toastStatus);
+      if(error.response && error.response.status === 409){
         alert("User already exist");
         navigate("/login")
       }

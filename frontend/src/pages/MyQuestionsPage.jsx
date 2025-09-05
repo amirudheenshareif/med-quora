@@ -72,16 +72,16 @@ export const MyQuestionsPage = () => {
           <Button onClick={() => {
             setMyQuestions(allQuestions)
             setActiveStatus("All")
-            }} className={`mt-2 ${activeStatus=="All" ? 'bg-blue-600 text-white' : ""}`}   variant='outline'>{`All Questions(4)`}</Button>
+            }} className={`mt-2 ${activeStatus=="All" ? 'bg-blue-600 text-white' : ""}`}   variant='outline'>{`All Questions`}</Button>
           <Button onClick={() => {
             setMyQuestions(answeredQuestions)
             setActiveStatus("Answered")
             }} className={`mt-2 ${activeStatus=="Answered" ? 'bg-green-600 hover:bg-green-600 text-white' : ""}`}
-            variant='outline' >{`Answered(3)`}</Button>
+            variant='outline' >{`Answered`}</Button>
           <Button onClick={() => {
             setMyQuestions(pendingQuestions)
             setActiveStatus("Pending")
-            }} className={`mt-2 ${activeStatus=="Pending" ? 'bg-yellow-500 hover:bg-yellow-500 text-white' : ""}`} variant='outline'>{`Pending(1)`}</Button>
+            }} className={`mt-2 ${activeStatus=="Pending" ? 'bg-yellow-500 hover:bg-yellow-500 text-white' : ""}`} variant='outline'>{`Pending`}</Button>
         </div>
       </div>
 

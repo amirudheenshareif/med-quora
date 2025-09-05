@@ -65,7 +65,7 @@ signUpRoute.post("/patient", async(req,res)=> {
         message:"User created successfully",
         token:token,
         role:"patient",
-        id:newUser[0]._id,
+        userId:newUser[0]._id,
         firstName:newUser[0].firstName,
         lastName:newUser[0].lastName
     });
