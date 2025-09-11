@@ -47,7 +47,7 @@ export const Header = () => {
     <header className='flex cursor-pointer justify-between items-center p-3 sm:p-6'>
       <div onClick={()=> navigate("/")} className='flex items-center gap-2'>
         <Stethoscope className="h-5 sm:h-8 w-5 sm:w-8 text-blue-600" />
-        <p className='text-sm sm:text-1xl'>MedPlus</p>
+        <p className='text-sm sm:text-1xl'>CareSphere</p>
       </div>
       {(isSignedIn) ? (
        <div className='bg-slate-300 rounded-full p-1'>
